@@ -1,0 +1,82 @@
+/*
+	PMX: Palworld server settings editor 
+    Copyright (C) 2024  Pmx
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+.inner_content{
+    margin: auto;
+    width: 75%;
+}
+
+.main_content h1{
+    text-align: center;
+}
+
+.form-control[type=text], .form-control[type=select], .form-control[type=number], select{
+    width: 45% !important; /* bootstrap problem: width wrong */
+}
+
+.lang_selection button{
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+    width: 15rem;
+    margin-top: 2rem;
+}
+
+.drag_drop {
+    width: 33%;
+    height: 10rem;
+    background-color: lightyellow;
+    color: darkblue;
+    text-align: center;
+    margin: auto;
+}
+.drag_drop span{
+    vertical-align: middle;
+    line-height: 10rem;
+    font-weight: bold;
+    font-size: x-large;
+}
+.dot_text{
+    padding-left: 0.5rem;
+    margin-bottom: 0 !important;
+}
+.form-inline div label{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-bottom: 0 !important;
+}
+.smaller_hint_text{
+    font-size: large;
+    line-height: 2rem;
+    color:darkred;
+    height: 1rem;
+    width: 100%;
+    margin:auto;
+    text-align: center;
+    display: inline-block;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.export_btns{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin: 2rem 1em 1rem;
+}
+.reset_btn { margin-left: 15em;}

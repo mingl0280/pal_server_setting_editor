@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<HTML>
+<head>
+<!-- PMX: Palworld server settings editor 
+    Copyright (C) 2024  Pmx
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+    <meta charset="utf-8">
+    <title>Palworld Server Config Editor</title>
+    <link href="static/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="static/css/PalCfgEdit.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="box-holder">
+    <div id="primary">
+        <div class="inner_content"> <!-- Center of the page -->
+            <div class="lang_selection">
+                <button @click="handle_lang(0)" class="btn btn-lg btn-primary" type="button">Chinese</button>
+                <button @click="handle_lang(1)" class="btn btn-lg btn-primary" type="button">English</button>
+            </div>
+            <div class="main_content">
+                <h1>{{selected_lang.title}}</h1> <!-- title, very center of the page -->
+                <div class="drag_drop" id="config_file_input" @drop="handle_file_drop" @dragover.prevent @dragenter.prevent>
+                    <span>{{selected_lang.drag_drop_text}}</span>
+                </div>
+                <div class="smaller_hint_text">
+                    <span>{{selected_file_name}}</span>
+                </div>
+
+                <div class="export_btns">
+                    <button type="button" @click="generate_cfg" class="btn btn-lg btn-primary">{{selected_lang.save_changes}}</button>
+                    <button type="button" @click="reset_all" class="btn btn-lg btn-danger reset_btn">{{selected_lang.reset}}</button>
+                </div>
+
+                <div class="editor">
+                    <table class="table table-bordered table-responsive-lg">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>{{selected_lang.opt_name}}</th>
+                            <th>{{selected_lang.opt_value}}</th>
+                            <th>{{selected_lang.reset_button}}</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-striped table-hover">
+                        <tr v-for="opt_item in configurations.sections[0].values[0].values">
+                            <td>{{opt_item.Name}}</td>
+                            <td>
+                                <form class="form-inline">
+                                    <div v-if="opt_item.Type == 'bool'">
+                                        <input class="form-control" type="radio" v-model="opt_item.Value"
+                                               value="true" />{{selected_lang.true}}
+                                        <input class="form-control" type="radio" v-model="opt_item.Value" value="false" />{{selected_lang.false}}
+
+                                        <label class="form-check-label form-check-inline">{{selected_lang.CurrentValue}} : {{opt_item.Value}}</label>
+                                    </div>
+                                    <div v-if="opt_item.Type == 'string'">
+                                        <input class="form-control" :disabled="opt_item.Disabled" type="text" v-model="opt_item.Value"/>
+                                        <label class="form-check-label form-check-inline">{{selected_lang.CurrentValue}} : {{opt_item.Value}}</label>
+                                    </div>
+                                    <div v-if="opt_item.Type == 'options'">
+                                        <select class="form-control" v-model="opt_item.Value">
+                                            <option @value="possible_opt"
+                                                    v-for="possible_opt in opt_item.PossibleOptions">{{possible_opt}}
+                                            </option>
+                                        </select>
+                                        <label v-if="opt_item.Name == 'Difficulty'" class="form-check-label form-check-inline">{{selected_lang.difficulty_not_selectable}}</label>
+                                        <label class="form-check-label form-check-inline">{{selected_lang.CurrentValue}} : {{opt_item.Value}}</label>
+                                    </div>
+                                    <div v-if="opt_item.Type == 'float'">
+                                        <input class="form-control" type="number" v-model.number="opt_item.Value"/>
+                                        <label class="form-check-inline dot_text"> {{selected_lang.float}} </label>
+                                        <label class="form-check-label form-check-inline">{{selected_lang.CurrentValue}} : {{opt_item.Value}}</label>
+                                    </div>
+                                    <div v-if="opt_item.Type == 'int'">
+                                        <input class="form-control" type="number" v-model="opt_item.Value" :placeholder="selected_lang.int"/>
+                                        <label class="form-check-inline dot_text"> {{selected_lang.int}} </label>
+                                        <label class="form-check-label form-check-inline">{{selected_lang.CurrentValue}} : {{opt_item.Value}}</label>
+                                    </div>
+
+                                </form>
+                            </td>
+                            <td>
+                                <button type="button" @click="reset_row(opt_item.Name)">{{selected_lang.reset}}</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+2024 Powered by PMX
+</body>
+</HTML>
+
+<script src="static/js/main.js" type="module"></script>
+<script type="module">
+    import {createApp} from "./static/js/vue.esm-browser.js";
+    import primary_component from "./static/js/primary_component.js";
+
+    export const app1 = createApp(primary_component).mount('#primary');
+</script>
